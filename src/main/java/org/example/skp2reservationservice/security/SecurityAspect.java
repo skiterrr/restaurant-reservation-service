@@ -35,13 +35,15 @@ public class SecurityAspect {
         //Check for authorization parameter
         String token = null;
         for (int i = 0; i < methodSignature.getParameterNames().length; i++) {
-            if (methodSignature.getParameterNames()[i].equals("authorization")) {
+            if (methodSignature.getParameterNames()[i].equalsIgnoreCase("authorization")) {
                 //Check bearer schema
                 if (joinPoint.getArgs()[i].toString().startsWith("Bearer")) {
                     //Get token
                     token = joinPoint.getArgs()[i].toString().split(" ")[1];
+                    System.err.println("skiteruuuu");
                 }
             }
+            System.err.println("najjacisi");
         }
         //If token is not presents return UNAUTHORIZED response
         if (token == null) {
