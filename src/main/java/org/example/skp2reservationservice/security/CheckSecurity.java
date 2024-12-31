@@ -1,4 +1,4 @@
-package org.example.skp2reservationservice.secutiry;
+package org.example.skp2reservationservice.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

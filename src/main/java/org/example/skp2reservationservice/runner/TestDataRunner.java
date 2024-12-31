@@ -21,7 +21,10 @@ public class TestDataRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Restaurant restaurant = new Restaurant("restoran1","abv 15",
                 "nesto",15,"9-17", CuisineType.ITALIAN);
+        Restaurant restaurant1 = new Restaurant("restoran2","bcc 16",
+                "nestooo",12,"9-22", CuisineType.CHINESE);
         restaurantRepository.save(restaurant);
+        restaurantRepository.save(restaurant1);
     }
 
 }

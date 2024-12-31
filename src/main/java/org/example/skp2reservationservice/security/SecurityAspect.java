@@ -1,11 +1,12 @@
-package org.example.skp2reservationservice.secutiry;
+package org.example.skp2reservationservice.security;
+
 
 import io.jsonwebtoken.Claims;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.example.skp2reservationservice.secutiry.service.TokenService;
+import org.example.skp2reservationservice.security.service.TokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,6 @@ import java.util.Arrays;
 @Aspect
 @Configuration
 public class SecurityAspect {
-
     @Value("${oauth.jwt.secret}")
     private String jwtSecret;
 
@@ -27,7 +27,7 @@ public class SecurityAspect {
         this.tokenService = tokenService;
     }
 
-    @Around("@annotation(org.example.skp2reservationservice.secutiry.CheckSecurity)")
+    @Around("@annotation(org.example.skp2reservationservice.security.CheckSecurity)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         //Get method signature
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -62,5 +62,4 @@ public class SecurityAspect {
         //Return FORBIDDEN if user has't appropriate role for specified route
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
-
 }
