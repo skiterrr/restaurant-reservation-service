@@ -42,7 +42,19 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDTO updateRestaurant(long id, RestaurantDTO restaurantDTO) {
-        return null;
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Restaurant with id: %d does not exist.", id)));
+
+        restaurant.setName(restaurantDTO.getName());
+        restaurant.setAddress(restaurantDTO.getAddress());
+        restaurant.setDescription(restaurantDTO.getDescription());
+        restaurant.setNumberOfTables(restaurantDTO.getNumberOfTables());
+        restaurant.setWorkingHours(restaurantDTO.getWorkingHours());
+        restaurant.setCuisineType(restaurantDTO.getCuisineType());
+
+        restaurant = restaurantRepository.save(restaurant);
+
+        return restaurantMapper.restaurantToRestaurantDTO(restaurant);
     }
 
     @Override

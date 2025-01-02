@@ -15,9 +15,6 @@ public class Table {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurant restaurant;
 
     @Column(name = "seats_number")
     private int seatsNumber;
@@ -26,20 +23,37 @@ public class Table {
     @Column(length = 20)
     private TableZone zone;
 
-    @OneToMany(mappedBy = "table")
-    private List<Reservation> reservations;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
-    // Constructors
     public Table() {
     }
 
-    public Table(Restaurant restaurant, int seatsNumber, TableZone zone) {
-        this.restaurant = restaurant;
+    public Table(Long id, int seatsNumber, TableZone zone) {
+        this.id = id;
         this.seatsNumber = seatsNumber;
         this.zone = zone;
     }
 
-    // Getters and Setters
+    public Table(Long id, int seatsNumber, TableZone zone, Restaurant restaurant) {
+        this.id = id;
+        this.seatsNumber = seatsNumber;
+        this.zone = zone;
+        this.restaurant = restaurant;
+    }
+
+    public Table(int seatsNumber, TableZone zone) {
+        this.seatsNumber = seatsNumber;
+        this.zone = zone;
+    }
+
+    public Table(int seatsNumber, TableZone zone, Restaurant restaurant) {
+        this.seatsNumber = seatsNumber;
+        this.zone = zone;
+        this.restaurant = restaurant;
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,13 +62,6 @@ public class Table {
         this.id = id;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
 
     public int getSeatsNumber() {
         return seatsNumber;
@@ -72,11 +79,11 @@ public class Table {
         this.zone = zone;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }
