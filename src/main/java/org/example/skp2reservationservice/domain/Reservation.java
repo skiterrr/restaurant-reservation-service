@@ -13,14 +13,10 @@ public class Reservation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "table_id", nullable = false)
-    private Table table;
+    @JoinColumn(name = "reservation_slot", nullable = false)
+    private ReservationSlot reservationSlot;
 
-    @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime;
+    private Long userId;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
@@ -33,12 +29,19 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Table table, LocalDateTime startTime, LocalDateTime endTime, ReservationStatus status) {
-        this.table = table;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Reservation(Long id, ReservationSlot reservationSlot, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+        this.id = id;
+        this.reservationSlot = reservationSlot;
+        this.userId = userId;
         this.status = status;
-        this.createdOn = LocalDateTime.now();
+        this.createdOn = createdOn;
+    }
+
+    public Reservation(ReservationSlot reservationSlot, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+        this.reservationSlot = reservationSlot;
+        this.userId = userId;
+        this.status = status;
+        this.createdOn = createdOn;
     }
 
     // Getters and Setters
@@ -50,28 +53,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public Table getTable() {
-        return table;
+    public ReservationSlot getReservationSlot() {
+        return reservationSlot;
     }
 
-    public void setTable(Table table) {
-        this.table = table;
+    public void setReservationSlot(ReservationSlot reservationSlot) {
+        this.reservationSlot = reservationSlot;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public ReservationStatus getStatus() {

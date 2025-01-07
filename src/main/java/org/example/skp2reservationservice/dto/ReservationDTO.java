@@ -1,17 +1,41 @@
 package org.example.skp2reservationservice.dto;
 
+import org.example.skp2reservationservice.domain.ReservationStatus;
+
 import java.time.LocalDateTime;
 
 public class ReservationDTO {
     private Long id;
-    private Long tableId;
+    private Long reservationSlotId;
     private Long userId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String status;
+    private ReservationStatus status;
+    private LocalDateTime createdOn;
 
     // Constructors
     public ReservationDTO() {}
+
+
+    public ReservationDTO(Long id, Long reservationSlotId, Long userId, ReservationStatus status) {
+        this.id = id;
+        this.reservationSlotId = reservationSlotId;
+        this.userId = userId;
+        this.status = status;
+    }
+
+    public ReservationDTO(Long id, Long reservationSlotId, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+        this.id = id;
+        this.reservationSlotId = reservationSlotId;
+        this.userId = userId;
+        this.status = status;
+        this.createdOn = createdOn;
+    }
+
+    public ReservationDTO(Long reservationSlotId, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+        this.reservationSlotId = reservationSlotId;
+        this.userId = userId;
+        this.status = status;
+        this.createdOn = createdOn;
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -22,12 +46,12 @@ public class ReservationDTO {
         this.id = id;
     }
 
-    public Long getTableId() {
-        return tableId;
+    public Long getReservationSlotId() {
+        return reservationSlotId;
     }
 
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
+    public void setReservationSlotId(Long reservationSlotId) {
+        this.reservationSlotId = reservationSlotId;
     }
 
     public Long getUserId() {
@@ -38,27 +62,19 @@ public class ReservationDTO {
         this.userId = userId;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStatus() {
+    public ReservationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ReservationStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
     }
 }

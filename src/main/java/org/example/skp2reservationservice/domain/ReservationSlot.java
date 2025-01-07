@@ -17,15 +17,15 @@ public class ReservationSlot {
     private Table table;
 
     @Column(name = "slot_start")
-    private LocalDateTime slotStart;
+    private String slotStart;
 
     @Column(name = "slot_end")
-    private LocalDateTime slotEnd;
+    private String slotEnd;
 
     @Column(name = "is_available")
     private Boolean isAvailable;
 
-    public ReservationSlot(Long id, Table table, LocalDateTime slotStart, LocalDateTime slotEnd, Boolean isAvailable) {
+    public ReservationSlot(Long id, Table table, String slotStart, String slotEnd, Boolean isAvailable) {
         this.id = id;
         this.table = table;
         this.slotStart = slotStart;
@@ -33,7 +33,7 @@ public class ReservationSlot {
         this.isAvailable = isAvailable;
     }
 
-    public ReservationSlot(Table table, LocalDateTime slotStart, LocalDateTime slotEnd, Boolean isAvailable) {
+    public ReservationSlot(Table table, String slotStart, String slotEnd, Boolean isAvailable) {
         this.table = table;
         this.slotStart = slotStart;
         this.slotEnd = slotEnd;
@@ -51,20 +51,19 @@ public class ReservationSlot {
         this.id = id;
     }
 
-
-    public LocalDateTime getSlotStart() {
+    public String getSlotStart() {
         return slotStart;
     }
 
-    public void setSlotStart(LocalDateTime slotStart) {
+    public void setSlotStart(String slotStart) {
         this.slotStart = slotStart;
     }
 
-    public LocalDateTime getSlotEnd() {
+    public String getSlotEnd() {
         return slotEnd;
     }
 
-    public void setSlotEnd(LocalDateTime slotEnd) {
+    public void setSlotEnd(String slotEnd) {
         this.slotEnd = slotEnd;
     }
 
@@ -82,5 +81,16 @@ public class ReservationSlot {
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationSlot{" +
+                "id=" + id +
+                ", table=" + table +
+                ", slotStart=" + slotStart +
+                ", slotEnd=" + slotEnd +
+                ", isAvailable=" + isAvailable +
+                '}';
     }
 }

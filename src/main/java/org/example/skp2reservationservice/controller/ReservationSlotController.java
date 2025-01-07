@@ -39,24 +39,28 @@ public class ReservationSlotController {
         return new ResponseEntity<>(reservationSlotService.getAllReservationSlots(pageable), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get a specific reservation slot")
     @GetMapping("/{id}")
 //    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> getReservationSlotByID(@PathVariable("id") long id) {
         return new ResponseEntity<>(reservationSlotService.getReservationSlot(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Make a reservation slot")
     @PostMapping
 //    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> createReservationSlot(@RequestBody ReservationSlotDTO reservationSlotDTO) {
         return new ResponseEntity<>(reservationSlotService.createReservationSlot(reservationSlotDTO), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update a reservation slot")
     @PutMapping("/{id}")
 //    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> updateReservationSlot( @PathVariable("id") long id, @RequestBody ReservationSlotDTO reservationSlotDTO) {
         return new ResponseEntity<>(reservationSlotService.updateReservationSlot(id, reservationSlotDTO), HttpStatus.OK);
     }
 
+    @Operation(summary = "Delete a reservation slot")
     @DeleteMapping("/{id}")
 //    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<?> deleteReservationSlot(@PathVariable("id") long id) {

@@ -36,6 +36,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public RestaurantDTO createRestaurant(RestaurantDTO restaurantDTO) {
         Restaurant restaurant = restaurantMapper.restaurantDTOToRestaurant(restaurantDTO);
+        System.err.println(restaurant);
         restaurantRepository.save(restaurant);
         return restaurantMapper.restaurantToRestaurantDTO(restaurant);
     }

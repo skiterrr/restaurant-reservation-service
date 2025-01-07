@@ -35,7 +35,6 @@ public class ReservationSlotMapper {
 
     public ReservationSlot reservationSlotDTOToReservationSlot(ReservationSlotDTO reservationSlotDTO) {
         ReservationSlot reservationSlot = new ReservationSlot();
-        reservationSlot.setId(reservationSlotDTO.getId());
         reservationSlot.setSlotEnd(reservationSlotDTO.getSlotEnd());
         reservationSlot.setSlotStart(reservationSlotDTO.getSlotStart());
         reservationSlot.setAvailable(reservationSlotDTO.getAvailable());

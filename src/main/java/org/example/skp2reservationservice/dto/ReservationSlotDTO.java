@@ -8,13 +8,13 @@ public class ReservationSlotDTO {
 
     private Long id;
     private Long tableId;
-    private LocalDateTime slotStart;
-    private LocalDateTime slotEnd;
+    private String slotStart;
+    private String slotEnd;
     private Boolean Available;
 
     public ReservationSlotDTO() {}
 
-    public ReservationSlotDTO(Long id, Long tableId, LocalDateTime slotStart, LocalDateTime slotEnd, Boolean available) {
+    public ReservationSlotDTO(Long id, Long tableId, String slotStart, String slotEnd, Boolean available) {
         this.id = id;
         this.tableId = tableId;
         this.slotStart = slotStart;
@@ -39,19 +39,19 @@ public class ReservationSlotDTO {
         this.tableId = tableId;
     }
 
-    public LocalDateTime getSlotStart() {
+    public String getSlotStart() {
         return slotStart;
     }
 
-    public void setSlotStart(LocalDateTime slotStart) {
+    public void setSlotStart(String slotStart) {
         this.slotStart = slotStart;
     }
 
-    public LocalDateTime getSlotEnd() {
+    public String getSlotEnd() {
         return slotEnd;
     }
 
-    public void setSlotEnd(LocalDateTime slotEnd) {
+    public void setSlotEnd(String slotEnd) {
         this.slotEnd = slotEnd;
     }
 
@@ -63,14 +63,4 @@ public class ReservationSlotDTO {
         this.Available = isAvailable;
     }
 
-    @Override
-    public String toString() {
-        return "ReservationSlotDTO{" +
-                "id=" + id +
-                ", tableId=" + tableId +
-                ", slotStart=" + slotStart +
-                ", slotEnd=" + slotEnd +
-                ", Available=" + Available +
-                '}';
-    }
 }

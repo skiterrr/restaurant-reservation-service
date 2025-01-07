@@ -86,4 +86,14 @@ public class Table {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "id=" + id +
+                ", seatsNumber=" + seatsNumber +
+                ", zone=" + zone +
+                ", restaurant=" + restaurant +
+                '}';
+    }
 }

@@ -66,12 +66,9 @@ public class TestDataRunner implements CommandLineRunner {
         restaurant1.setTables(r1Tables);
         System.err.println(tables);
 
-        ReservationSlot reservationSlot = new ReservationSlot(table, LocalDateTime.of(2025,1,26,17,30),
-                LocalDateTime.of(2025,1,26,19,30),true);
-        ReservationSlot reservationSlot1 = new ReservationSlot(table1, LocalDateTime.of(2025,1,26,17,30),
-                LocalDateTime.of(2025,1,26,19,30),true);
-        ReservationSlot reservationSlot2 = new ReservationSlot(table1, LocalDateTime.of(2025,1,27,17,30),
-                LocalDateTime.of(2025,1,26,19,30),true);
+        ReservationSlot reservationSlot = new ReservationSlot(table, "17:30","19:30",true);
+        ReservationSlot reservationSlot1 = new ReservationSlot(table1, "13:30","15:30",true);
+        ReservationSlot reservationSlot2 = new ReservationSlot(table1, "15:45","18:00",true);
         reservationSlotRepository.save(reservationSlot);
         reservationSlotRepository.save(reservationSlot1);
         reservationSlotRepository.save(reservationSlot2);

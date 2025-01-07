@@ -37,6 +37,7 @@ public class TableServiceImpl implements TableService {
     @Override
     public TableDTO createTable(TableDTO tableDTO) {
         Table table = tableMapper.tableDTOToTable(tableDTO);
+        System.err.println(table);
         tableRepository.save(table);
         return tableMapper.tableToTableDTO(table);
     }

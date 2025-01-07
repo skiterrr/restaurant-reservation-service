@@ -114,4 +114,11 @@ public class Restaurant {
     public void setTables(List<Table> tables) {
         this.tables = tables;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "restaurant_id=" + id  +
+                '}';
+    }
 }

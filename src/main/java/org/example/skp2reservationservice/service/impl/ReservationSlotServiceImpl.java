@@ -44,7 +44,7 @@ public class ReservationSlotServiceImpl implements ReservationSlotService {
     @Override
     public ReservationSlotDTO createReservationSlot(ReservationSlotDTO reservationSlotDTO) {
         ReservationSlot reservationSlot = reservationSlotMapper.reservationSlotDTOToReservationSlot(reservationSlotDTO);
-        System.err.println(reservationSlotMapper.reservationSlotToReservationSlotDTO(reservationSlot));
+        System.err.println(reservationSlot);
         reservationSlotRepository.save(reservationSlot);
         return reservationSlotMapper.reservationSlotToReservationSlotDTO(reservationSlot);
     }
