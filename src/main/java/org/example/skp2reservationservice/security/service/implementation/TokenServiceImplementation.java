@@ -22,7 +22,7 @@ public class TokenServiceImplementation implements TokenService {
     public String generate(Claims claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
     }
 

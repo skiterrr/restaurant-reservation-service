@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.example.skp2reservationservice.dto.RestaurantDTO;
 import org.example.skp2reservationservice.dto.TableDTO;
+import org.example.skp2reservationservice.security.CheckSecurity;
 import org.example.skp2reservationservice.service.TableService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,31 +35,31 @@ public class TableController {
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
     @GetMapping
-//    @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
+    @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<Page<TableDTO>> findAll(@ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(tableService.getAllTables(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
     public ResponseEntity<TableDTO> getTableByID(@PathVariable("id") long id) {
         return new ResponseEntity<>(tableService.getTableByID(id), HttpStatus.OK);
     }
 
     @PostMapping
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<TableDTO> createTable(@RequestBody TableDTO tableDTO) {
         return new ResponseEntity<>(tableService.createTable(tableDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<TableDTO> updateTable( @PathVariable("id") long id, @RequestBody TableDTO tableDTO) {
         return new ResponseEntity<>(tableService.updateTable(id, tableDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<?> deleteRestaurant(@PathVariable("id") long id) {
         tableService.deleteTable(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

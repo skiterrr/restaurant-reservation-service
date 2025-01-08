@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.example.skp2reservationservice.dto.ReservationSlotDTO;
 import org.example.skp2reservationservice.dto.RestaurantDTO;
 import org.example.skp2reservationservice.dto.TableDTO;
+import org.example.skp2reservationservice.security.CheckSecurity;
 import org.example.skp2reservationservice.service.ReservationSlotService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,35 +35,35 @@ public class ReservationSlotController {
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
     @GetMapping
-//    @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
+    @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<Page<ReservationSlotDTO>> findAll(@ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(reservationSlotService.getAllReservationSlots(pageable), HttpStatus.OK);
     }
 
     @Operation(summary = "Get a specific reservation slot")
     @GetMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> getReservationSlotByID(@PathVariable("id") long id) {
         return new ResponseEntity<>(reservationSlotService.getReservationSlot(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Make a reservation slot")
     @PostMapping
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> createReservationSlot(@RequestBody ReservationSlotDTO reservationSlotDTO) {
         return new ResponseEntity<>(reservationSlotService.createReservationSlot(reservationSlotDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update a reservation slot")
     @PutMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<ReservationSlotDTO> updateReservationSlot( @PathVariable("id") long id, @RequestBody ReservationSlotDTO reservationSlotDTO) {
         return new ResponseEntity<>(reservationSlotService.updateReservationSlot(id, reservationSlotDTO), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a reservation slot")
     @DeleteMapping("/{id}")
-//    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<?> deleteReservationSlot(@PathVariable("id") long id) {
         reservationSlotService.deleteReservationSlot(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
