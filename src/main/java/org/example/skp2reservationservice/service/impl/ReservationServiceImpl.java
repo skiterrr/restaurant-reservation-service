@@ -4,10 +4,12 @@ import org.example.skp2reservationservice.client.users.dto.ClientDto;
 import org.example.skp2reservationservice.domain.Reservation;
 import org.example.skp2reservationservice.domain.ReservationSlot;
 import org.example.skp2reservationservice.domain.ReservationStatus;
+import org.example.skp2reservationservice.dto.NotificationDTO;
 import org.example.skp2reservationservice.dto.ReservationDTO;
 import org.example.skp2reservationservice.exception.NotFoundException;
 import org.example.skp2reservationservice.repository.ReservationRepository;
 import org.example.skp2reservationservice.repository.ReservationSlotRepository;
+import org.example.skp2reservationservice.service.NotificationSender;
 import org.example.skp2reservationservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -28,6 +30,8 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepository reservationRepository;
     private ReservationSlotRepository reservationSlotRepository;
     private RestTemplate userServiceRestTemplate;
+    @Autowired
+    private NotificationSender notificationSender;
 
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationSlotRepository reservationSlotRepository, RestTemplate userServiceRestTemplate) {
@@ -70,7 +74,9 @@ public class ReservationServiceImpl implements ReservationService {
                 throw new RuntimeException("Failed to update user data", e);
             }
             //TODO: POSLATI MEJL KLIJENTU I MENADZERU DA JE REZERVACIJA NAPRAVLJENA
-            Reservation reservation = new Reservation(reservationSlot, reservationDTO.getUserId(), reservationDTO.getStatus(), reservationDTO.getCreatedOn());
+            Reservation reservation = new Reservation(reservationSlot, reservationDTO.getUserId(), reservationDTO.getStatus(), reservationDTO.getCreatedOn(), reservationDTO.getEmail());
+            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), reservationDTO.getEmail(), "RESERVATION_CREATED");
+            notificationSender.sendNotification(notification);
             reservationRepository.save(reservation);
             reservationSlot.setAvailable(false);
             reservationSlotRepository.save(reservationSlot);
@@ -83,7 +89,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new NotFoundException("Reservation not found"));
         if(reservation.getStatus()!=ReservationStatus.CANCELLED){
             ReservationDTO reservationDTO = new ReservationDTO(reservation.getId(),reservation.getReservationSlot().getId(),reservation.getUserId(),
-                    ReservationStatus.CANCELLED,reservation.getCreatedOn());
+                    ReservationStatus.CANCELLED,reservation.getCreatedOn(), reservation.getEmail());
             ClientDto clientDto;
             try {
                 ResponseEntity<ClientDto> response = userServiceRestTemplate.getForEntity("/user/" + reservationDTO.getUserId(), ClientDto.class);

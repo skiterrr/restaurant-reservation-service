@@ -10,6 +10,7 @@ public class ReservationDTO {
     private Long userId;
     private ReservationStatus status;
     private LocalDateTime createdOn;
+    private String email;
 
     // Constructors
     public ReservationDTO() {}
@@ -22,12 +23,13 @@ public class ReservationDTO {
         this.status = status;
     }
 
-    public ReservationDTO(Long id, Long reservationSlotId, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+    public ReservationDTO(Long id, Long reservationSlotId, Long userId, ReservationStatus status, LocalDateTime createdOn,String email) {
         this.id = id;
         this.reservationSlotId = reservationSlotId;
         this.userId = userId;
         this.status = status;
         this.createdOn = createdOn;
+        this.email = email;
     }
 
     public ReservationDTO(Long reservationSlotId, Long userId, ReservationStatus status, LocalDateTime createdOn) {
@@ -38,6 +40,15 @@ public class ReservationDTO {
     }
 
     // Getters and Setters
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

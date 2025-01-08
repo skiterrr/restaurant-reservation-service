@@ -17,7 +17,7 @@ public class Reservation {
     private ReservationSlot reservationSlot;
 
     private Long userId;
-
+    private String email;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ReservationStatus status;
@@ -37,14 +37,24 @@ public class Reservation {
         this.createdOn = createdOn;
     }
 
-    public Reservation(ReservationSlot reservationSlot, Long userId, ReservationStatus status, LocalDateTime createdOn) {
+    public Reservation(ReservationSlot reservationSlot, Long userId, ReservationStatus status, LocalDateTime createdOn,String email) {
         this.reservationSlot = reservationSlot;
         this.userId = userId;
         this.status = status;
         this.createdOn = createdOn;
+        this.email = email;
     }
 
     // Getters and Setters
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
