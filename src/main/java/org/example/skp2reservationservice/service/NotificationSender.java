@@ -19,6 +19,7 @@ public class NotificationSender {
         try {
             String jsonNotification = objectMapper.writeValueAsString(notification);
             jmsTemplate.convertAndSend("notificationQueue", jsonNotification);
+            System.out.println(jsonNotification + "adf");
             System.out.println("Poslata notifikacija tipa: " + notification.getNotificationType());
         } catch (Exception e) {
             e.printStackTrace();

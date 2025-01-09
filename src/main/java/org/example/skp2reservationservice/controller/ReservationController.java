@@ -21,7 +21,7 @@ public class ReservationController {
 
     @Operation(summary = "Make a reservation")
     @PostMapping
-    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    //@CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
     public ResponseEntity<ReservationDTO> createReservationSlot(@RequestBody ReservationDTO reservationDTO) {
         reservationService.createReservation(reservationDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
