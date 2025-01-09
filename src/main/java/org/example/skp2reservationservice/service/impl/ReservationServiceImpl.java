@@ -122,7 +122,8 @@ public class ReservationServiceImpl implements ReservationService {
 
             reservation.setStatus(ReservationStatus.CANCELLED);
 
-            //TODO: POSLATI MEJL MENADZERU DA JE KLIJENT OTKAZAO REZERVACIJU
+            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), reservationDTO.getEmail(), "RESERVATION_CANCELLED");
+            notificationSender.sendNotification(notification);
             reservationRepository.save(reservation);
             return reservationDTO;
         }
