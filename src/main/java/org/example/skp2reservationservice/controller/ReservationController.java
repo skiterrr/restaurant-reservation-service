@@ -21,16 +21,18 @@ public class ReservationController {
 
     @Operation(summary = "Make a reservation")
     @PostMapping
-    //@CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
-    public ResponseEntity<ReservationDTO> createReservationSlot(@RequestBody ReservationDTO reservationDTO) {
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER"})
+    public ResponseEntity<ReservationDTO> createReservation(@RequestHeader(value = "Authorization") String authorization,
+                                                            @RequestBody ReservationDTO reservationDTO) {
         reservationService.createReservation(reservationDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Operation(summary = "Cancel a reservation by client")
     @PutMapping("/{id}")
-    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
-    public ResponseEntity<ReservationDTO> clientCancelReservation( @PathVariable("id") long id) {
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER","ROLE_USER"})
+    public ResponseEntity<ReservationDTO> clientCancelReservation(@RequestHeader(value = "Authorization") String authorization,
+                                                                  @PathVariable("id") long id) {
         return new ResponseEntity<>(reservationService.clientCancelReservation(id), HttpStatus.OK);
     }
 }

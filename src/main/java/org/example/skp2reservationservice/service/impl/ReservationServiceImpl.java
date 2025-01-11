@@ -73,6 +73,7 @@ public class ReservationServiceImpl implements ReservationService {
             } catch (RestClientResponseException e) {
                 throw new RuntimeException("Failed to update user data", e);
             }
+
             //TODO: POSLATI MEJL KLIJENTU I MENADZERU DA JE REZERVACIJA NAPRAVLJENA
             Reservation reservation = new Reservation(reservationSlot, reservationDTO.getUserId(), reservationDTO.getStatus(), reservationDTO.getCreatedOn(), reservationDTO.getEmail());
             NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), reservationDTO.getEmail(), "RESERVATION_CREATED");
