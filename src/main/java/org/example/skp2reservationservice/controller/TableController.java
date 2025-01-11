@@ -36,31 +36,36 @@ public class TableController {
                             "Multiple sort criteria are supported.")})
     @GetMapping
     @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<Page<TableDTO>> findAll(@ApiIgnore Pageable pageable) {
+    public ResponseEntity<Page<TableDTO>> findAll(@RequestHeader(value = "Authorization") String authorization,
+                                                  @ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(tableService.getAllTables(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER"})
-    public ResponseEntity<TableDTO> getTableByID(@PathVariable("id") long id) {
+    public ResponseEntity<TableDTO> getTableByID(@RequestHeader(value = "Authorization") String authorization,
+                                                 @PathVariable("id") long id) {
         return new ResponseEntity<>(tableService.getTableByID(id), HttpStatus.OK);
     }
 
     @PostMapping
     @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
-    public ResponseEntity<TableDTO> createTable(@RequestBody TableDTO tableDTO) {
+    public ResponseEntity<TableDTO> createTable(@RequestHeader(value = "Authorization") String authorization,
+                                                @RequestBody TableDTO tableDTO) {
         return new ResponseEntity<>(tableService.createTable(tableDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
-    public ResponseEntity<TableDTO> updateTable( @PathVariable("id") long id, @RequestBody TableDTO tableDTO) {
+    public ResponseEntity<TableDTO> updateTable(@RequestHeader(value = "Authorization") String authorization,
+                                                @PathVariable("id") long id, @RequestBody TableDTO tableDTO) {
         return new ResponseEntity<>(tableService.updateTable(id, tableDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
-    public ResponseEntity<?> deleteRestaurant(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteRestaurant(@RequestHeader(value = "Authorization") String authorization,
+                                              @PathVariable("id") long id) {
         tableService.deleteTable(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

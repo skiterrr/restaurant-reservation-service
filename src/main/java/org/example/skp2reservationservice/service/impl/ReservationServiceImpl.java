@@ -48,10 +48,14 @@ public class ReservationServiceImpl implements ReservationService {
 
 
         if(reservationSlot.getAvailable()){
+            String email = "";
             ClientDto clientDto;
             try {
                 ResponseEntity<ClientDto> response = userServiceRestTemplate.getForEntity("/user/" + reservationDTO.getUserId(), ClientDto.class);
                 clientDto = response.getBody();
+                if (clientDto != null) {
+                    email = clientDto.getEmail();
+                }
                 if (clientDto == null) {
                     throw new NotFoundException(String.format("User %s not found", reservationDTO.getUserId()));
                 }else System.err.println("User sa imenom:"+clientDto.getFirstName()+" dohvacen");
@@ -67,6 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
             int numOfReservations = clientDto.getNumberOfReservation() + 1;
             System.err.println("br rezervacija posle: "+numOfReservations);
             clientDto.setNumberOfReservation(numOfReservations);
+            System.err.println("BR REZERVACIJA ASFASF: "+ clientDto.getNumberOfReservation());
 
             try {
                 userServiceRestTemplate.put("/user/" + reservationDTO.getUserId(), clientDto);
@@ -75,8 +80,9 @@ public class ReservationServiceImpl implements ReservationService {
             }
 
             //TODO: POSLATI MEJL KLIJENTU I MENADZERU DA JE REZERVACIJA NAPRAVLJENA
-            Reservation reservation = new Reservation(reservationSlot, reservationDTO.getUserId(), reservationDTO.getStatus(), reservationDTO.getCreatedOn(), reservationDTO.getEmail());
-            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), reservationDTO.getEmail(), "RESERVATION_CREATED");
+            System.err.println("EMAIL NA KOJI SE SALJE NOTIFIKACIJA JE: "+email);
+            Reservation reservation = new Reservation(reservationSlot, reservationDTO.getUserId(), reservationDTO.getStatus(), reservationDTO.getCreatedOn());
+            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), email, "RESERVATION_CREATED");
             notificationSender.sendNotification(notification);
             reservationRepository.save(reservation);
             reservationSlot.setAvailable(false);
@@ -89,12 +95,18 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationDTO clientCancelReservation(long id) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new NotFoundException("Reservation not found"));
         if(reservation.getStatus()!=ReservationStatus.CANCELLED){
+
+            String email = "";
+
             ReservationDTO reservationDTO = new ReservationDTO(reservation.getId(),reservation.getReservationSlot().getId(),reservation.getUserId(),
-                    ReservationStatus.CANCELLED,reservation.getCreatedOn(), reservation.getEmail());
+                    ReservationStatus.CANCELLED,reservation.getCreatedOn());
             ClientDto clientDto;
             try {
                 ResponseEntity<ClientDto> response = userServiceRestTemplate.getForEntity("/user/" + reservationDTO.getUserId(), ClientDto.class);
                 clientDto = response.getBody();
+                if (clientDto != null) {
+                    email = clientDto.getEmail();
+                }
                 if (clientDto == null) {
                     throw new NotFoundException(String.format("User %s not found", reservationDTO.getUserId()));
                 }else System.err.println("User sa imenom:"+clientDto.getFirstName()+" dohvacen");
@@ -123,7 +135,8 @@ public class ReservationServiceImpl implements ReservationService {
 
             reservation.setStatus(ReservationStatus.CANCELLED);
 
-            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), reservationDTO.getEmail(), "RESERVATION_CANCELLED");
+            System.err.println("EMAIL NA KOJI SE SALJE NOTIFIKACIJA JE: "+email);
+            NotificationDTO notification = new NotificationDTO(reservationDTO.getUserId(), email, "RESERVATION_CANCELLED");
             notificationSender.sendNotification(notification);
             reservationRepository.save(reservation);
             return reservationDTO;
